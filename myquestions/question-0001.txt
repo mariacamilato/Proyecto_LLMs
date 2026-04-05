@@ -1,0 +1,13 @@
+Pregunta 1 — Cálculo de Ganancia de Información por Feature.
+
+Contexto: Un equipo de datos trabaja en un modelo de clasificación de riesgo crediticio y quiere saber cuáles variables son más relevantes antes de entrenar, usando una métrica de impureza.
+Misión: Escribe una función llamada calcular_ganancia_informacion(X, y) que:
+
+Reciba una matriz X (numpy array o DataFrame) y un vector objetivo binario y.
+Para cada columna de X, binarice los valores según si están por encima o por debajo de la mediana de esa columna.
+Calcule la Ganancia de Información (reducción de entropía) de cada columna binarizada respecto a y, usando mutual_info_classif de sklearn.feature_selection con discrete_features=True.
+Devuelva un numpy.ndarray con los valores de ganancia de información, uno por cada columna de X, en el mismo orden.
+
+Nombre de la función: calcular_ganancia_informacion
+Argumentos: X (array-like), y (array-like)
+Retorna: numpy.ndarray de floats con shape (n_features,).

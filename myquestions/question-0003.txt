@@ -1,0 +1,13 @@
+Pregunta 3 — Índice de Compacidad de Clusters
+Contexto: Un investigador aplica KMeans a datos de sensores industriales y quiere una métrica simple que resuma qué tan compactos son los clusters encontrados: la distancia intra-cluster promedio.
+Misión: Escribe una función llamada calcular_compacidad_clusters(X, n_clusters, random_state=42) que:
+
+Reciba una matriz X (numpy array), un entero n_clusters y una semilla random_state.
+Escale X con StandardScaler de sklearn.
+Entrene un KMeans con n_clusters=n_clusters, n_init=10 y random_state=random_state.
+Para cada muestra, calcule su distancia euclidiana al centroide de su cluster asignado (usando numpy).
+Devuelva la media de todas esas distancias como un único float.
+
+Nombre de la función: calcular_compacidad_clusters
+Argumentos: X (numpy.ndarray), n_clusters (int), random_state (int, default 42)
+Retorna: float.

@@ -1,0 +1,13 @@
+Pregunta 2 — Error de Reconstrucción por Muestra con SVD Truncado
+Contexto: Un sistema de recomendación de películas necesita detectar usuarios cuyo perfil de gustos es "raro" o difícil de representar con pocos factores latentes.
+Misión: Escribe una función llamada calcular_error_reconstruccion_svd(X, n_componentes) que:
+
+Reciba una matriz X (numpy array de forma (n_usuarios, n_items)) y un entero n_componentes.
+Aplique TruncatedSVD de sklearn.decomposition con n_components=n_componentes sobre X.
+Reconstruya la matriz aproximada multiplicando la proyección por los componentes (inverse_transform).
+Calcule el error cuadrático medio por fila entre X y la reconstrucción usando numpy.
+Devuelva un numpy.ndarray de shape (n_usuarios,) con el error de cada usuario.
+
+Nombre de la función: calcular_error_reconstruccion_svd
+Argumentos: X (numpy.ndarray), n_componentes (int)
+Retorna: numpy.ndarray de floats con shape (n_muestras,).
