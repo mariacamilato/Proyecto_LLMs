@@ -10,4 +10,4 @@ Devuelva un numpy.ndarray de shape (n_usuarios,) con el error de cada usuario.
 
 Nombre de la función: calcular_error_reconstruccion_svd
 Argumentos: X (numpy.ndarray), n_componentes (int)
-Retorna: numpy.ndarray de floats con shape (n_muestras,)
+Retorna: numpy.ndarray de floats con shape (n_muestras,).

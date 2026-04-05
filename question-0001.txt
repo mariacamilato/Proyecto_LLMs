@@ -10,4 +10,4 @@ Devuelva un numpy.ndarray con los valores de ganancia de información, uno por c
 
 Nombre de la función: calcular_ganancia_informacion
 Argumentos: X (array-like), y (array-like)
-Retorna: numpy.ndarray de floats con shape (n_features,)
+Retorna: numpy.ndarray de floats con shape (n_features,).

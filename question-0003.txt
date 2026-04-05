@@ -10,4 +10,4 @@ Devuelva la media de todas esas distancias como un único float.
 
 Nombre de la función: calcular_compacidad_clusters
 Argumentos: X (numpy.ndarray), n_clusters (int), random_state (int, default 42)
-Retorna: float
+Retorna: float.
