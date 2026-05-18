@@ -24,3 +24,4 @@ def generar_curvas_aprendizaje(X, y, estimator_type, cv):
         'val_score_mean':   np.round(val_scores.mean(axis=1), 4),
         'val_score_std':    np.round(val_scores.std(axis=1), 4),
     })
+#
