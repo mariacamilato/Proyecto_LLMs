@@ -1,0 +1,8 @@
+1 — df_solar[df_solar['radiacion_w_m2'] > 800]
+Filtra solo las filas donde la radiación supera 800 W/m². Devuelve un DataFrame con solo esos registros.
+
+2 — filtro.empty
+Verifica si no quedó ningún registro tras el filtro. Si está vacío, retorna 0.0 como pide el enunciado.
+
+3 — filtro['eficiencia_porcentaje'].mean()
+Calcula el promedio de eficiencia solo de los momentos de alta radiación. El float() asegura que devuelve un número Python puro, no un tipo numpy.
