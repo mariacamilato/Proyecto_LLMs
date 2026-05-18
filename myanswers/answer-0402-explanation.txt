@@ -1,0 +1,17 @@
+1 — SimpleImputer(strategy="median")
+Rellena los NaN de cada columna con la mediana de esa columna. Se usa mediana (no media) 
+porque es más robusta ante valores extremos.
+
+2 — StandardScaler()
+Escala cada columna para que tenga media=0 y desviación estándar=1. Esto es importante para que 
+ninguna variable domine por tener unidades más grandes (ej: distancia en km vs temperatura en °C).
+
+3 — RandomForestClassifier(n_estimators=100, random_state=42)
+Entrena un bosque de 100 árboles de decisión. random_state=42 garantiza reproducibilidad.
+
+4 — Pipeline
+Encadena los 3 pasos anteriores en orden. La ventaja clave es que en cada fold de la validación 
+cruzada, el imputer y el scaler se ajustan solo con datos de entrenamiento, evitando data leakage.
+
+5 — cross_val_score(..., cv=5, scoring="f1")
+Divide los datos en 5 partes, entrena en 4 y evalúa en 1, rotando. Devuelve un array de 5 scores F1.
