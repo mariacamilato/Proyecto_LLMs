@@ -15,3 +15,10 @@ cruzada, el imputer y el scaler se ajustan solo con datos de entrenamiento, evit
 
 5 — cross_val_score(..., cv=5, scoring="f1")
 Divide los datos en 5 partes, entrena en 4 y evalúa en 1, rotando. Devuelve un array de 5 scores F1.
+
+Nota importante sobre la validación:
+El generador no fija una semilla global (np.random.seed), por lo que cada llamada produce un dataset distinto. Para validar correctamente la función, se debe usar el mismo inp generado para comparar con out:
+pythoninp, out = generar_caso_de_uso_predecir_retraso_vuelo()
+resultado = predecir_retraso_vuelo(inp["X"], inp["y"])
+assert np.allclose(resultado, out)
+Si se corre el main del generador por separado y luego la función, los scores F1 no coincidirán porque los datos son diferentes, pero eso no significa que la función esté mal.
