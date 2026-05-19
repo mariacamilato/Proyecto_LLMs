@@ -1,126 +1,68 @@
-DIAGNÓSTICO DE SOLUCIONES - FASE 2
+DIAGNÓSTICO DE SOLUCIONES - FASE 2 PROGRAMACIÓN LLMS
 
-----------------------------------------------------------
-PREGUNTA 0366
-----------------------------------------------------------
+*PREGUNTA 0366*
+
 Estado en el validador: usecase generator error
-Error reportado: Execution error: '{' was never closed (<string>, line 6)
-
+Error reportado: Failed to fetch code. 404 Client Error: Not Found for url:
+https://raw.githubusercontent.com/mariangelurzola-cmyk/questionsLLMs/main/myquestions/question-0002-usecase-generator.py
+ 
 Diagnóstico:
-El error no se origina en mi solución (answer-0366.py) sino en el generador
-de casos de uso del compañero (question-0002-usecase-generator.py, repositorio
-mariangelurzola-cmyk/questionsLLMs).
-
-En la línea 6 del generador hay una llave '{' que nunca se cierra, lo que
-produce un SyntaxError al intentar ejecutarlo. Esto impide que el validador
-pueda generar el caso de prueba y compararlo con mi respuesta.
-
+El error no se origina en mi solución (answer-0366.py) sino en que el
+repositorio de la compañera (mariangelurzola-cmyk/questionsLLMs) no está
+disponible públicamente o fue eliminado. El validador devuelve un error
+404 al intentar acceder al generador de casos de uso, por lo que no puede
+generar el caso de prueba ni compararlo con mi respuesta.
+ 
+Durante el desarrollo de la solución sí tuve acceso al enunciado y al
+generador de casos de uso, con los cuales validé mi función localmente
+antes de que el repositorio dejara de estar disponible.
+ 
 Mi solución es correcta:
-
+ 
     import pandas as pd
-
-    def contar_nulos_por_columna(df):
-        return df.isnull().sum()
-
-Esta función usa df.isnull() para detectar valores NaN (devuelve True donde
-hay NaN, False donde no) y .sum() para sumar por columna, ya que True=1 y
-False=0. El resultado es una Serie de pandas indexada por nombre de columna
-en el mismo orden que df.columns, exactamente como pide el enunciado.
-
-Validación local (100 iteraciones):
-    for _ in range(100):
-        inp, out = generar_caso_de_uso_contar_nulos_por_columna()
-        resultado = contar_nulos_por_columna(inp["df"])
-        assert resultado.equals(out)
-    → 100/100 casos pasados 
-
-----------------------------------------------------------
-PREGUNTA 0402
-----------------------------------------------------------
-Estado en el validador: output matches 
-No requiere diagnóstico. La solución fue validada correctamente.
-
-----------------------------------------------------------
-PREGUNTA 0570
-----------------------------------------------------------
-Estado en el validador: usecase generator error (crash del validador)
-Error reportado: ValueError: The truth value of a Series is ambiguous.
-                 Use a.empty, a.bool(), a.item(), a.any() or a.all()
-
-Diagnóstico:
-El error ocurre en el generador de casos de uso del compañero
-(question-0002-usecase-generator.py, repositorio
-jalexisherrera/ms1-lab-01-pandas-sklearn), no en mi solución (answer-0570.py).
-
-El error "The truth value of a Series is ambiguous" ocurre cuando se evalúa
-una Serie de pandas en un contexto booleano, por ejemplo: `if serie:` en lugar
-de `if serie.empty:` o `if serie.any():`. Esto es un bug en el generador del
-compañero que hace que el validador crashee antes de poder evaluar mi función.
-
-Mi solución es correcta:
-
-    import numpy as np
-    import pandas as pd
-    from sklearn.linear_model import LogisticRegression
-    from sklearn.tree import DecisionTreeClassifier
-    from sklearn.model_selection import learning_curve
-
-    def generar_curvas_aprendizaje(X, y, estimator_type, cv):
-        if estimator_type == 'logistic':
-            est = LogisticRegression(max_iter=1000, random_state=42)
-        else:
-            est = DecisionTreeClassifier(max_depth=5, random_state=42)
-
-        train_sizes_abs, train_scores, val_scores = learning_curve(
-            est, X, y,
-            train_sizes=np.linspace(0.2, 1.0, 5),
-            cv=cv,
-            scoring='accuracy',
-        )
-
-        return pd.DataFrame({
-            'train_size':       train_sizes_abs,
-            'train_score_mean': np.round(train_scores.mean(axis=1), 4),
-            'train_score_std':  np.round(train_scores.std(axis=1), 4),
-            'val_score_mean':   np.round(val_scores.mean(axis=1), 4),
-            'val_score_std':    np.round(val_scores.std(axis=1), 4),
-        })
-
-Validación local con el generador correcto:
-    inp, out = generar_caso_de_uso_generar_curvas_aprendizaje()
-    resultado = generar_curvas_aprendizaje(**inp)
-    assert resultado.equals(out)
-    → OK
-
-----------------------------------------------------------
-PREGUNTA 0642
-----------------------------------------------------------
-Estado en el validador: no evaluada (el validador crasheó en 0570)
-
-Diagnóstico:
-El validador no llegó a evaluar esta pregunta porque el crash producido por
-el generador de jalexisherrera (0570) interrumpió la ejecución completa.
-Esto es ajeno a mi solución.
-
-Mi solución es correcta:
-
-    import pandas as pd
-
+ 
     def eficiencia_promedio_alta_radiacion(df_solar):
         filtro = df_solar[df_solar['radiacion_w_m2'] > 800]
         if filtro.empty:
             return 0.0
         return float(filtro['eficiencia_porcentaje'].mean())
-
-Esta función filtra las filas donde la radiación supera 800 W/m², verifica
-si el filtro quedó vacío (retorna 0.0 en ese caso) y calcula el promedio de
-eficiencia de los registros restantes. El float() garantiza que el retorno
-sea un número Python puro y no un tipo numpy.
-
+ 
+La función filtra las filas donde la radiación supera 800 W/m² con
+df_solar['radiacion_w_m2'] > 800, verifica si el resultado está vacío
+con filtro.empty (retorna 0.0 en ese caso), y calcula el promedio de
+eficiencia con .mean(). El float() garantiza que el retorno sea un número
+Python puro y no un tipo numpy.
+ 
+El enunciado indicaba:
+- Dado un DataFrame con columnas ['radiacion_w_m2', 'eficiencia_porcentaje']
+- Devolver la eficiencia promedio donde radiacion_w_m2 > 800
+- Si no hay registros, devolver 0.0
+ 
+El generador de casos de uso (al que tuve acceso durante el desarrollo)
+construía un DataFrame aleatorio de 30 filas con valores de radiación entre
+0 y 1100 W/m², filtraba las filas con radiación > 800 y calculaba la media
+de eficiencia, que es exactamente lo que hace mi función.
+ 
 Validación local:
     inp, out = generar_caso_de_uso()
     resultado = eficiencia_promedio_alta_radiacion(inp["df_solar"])
     assert abs(resultado - out) < 1e-9
     → OK: 17.248204686053654
+ 
+*PREGUNTA 0402*
+
+Estado en el validador: output matches 
+No requiere diagnóstico. La solución fue validada correctamente.
+ 
+*PREGUNTA 0570*
+
+Estado en el validador: output matches 
+No requiere diagnóstico. La solución fue validada correctamente.
+ 
+*PREGUNTA 0642*
+
+Estado en el validador: output matches 
+No requiere diagnóstico. La solución fue validada correctamente.
+
 
 FIN DEL DIAGNÓSTICO
